@@ -1,4 +1,4 @@
-# Cable [![CircleCI](https://circleci.com/gh/transferwise/cable/tree/master.svg?style=svg)](https://circleci.com/gh/transferwise/cable/tree/master)
+# Cable [![CircleCI](https://circleci.com/gh/transferwise/cable/tree/master.svg?style=shield)](https://circleci.com/gh/transferwise/cable/tree/master)
 
 A simple and minimalistic url rewrite module.
 
