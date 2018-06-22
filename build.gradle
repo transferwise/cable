@@ -1,57 +1,53 @@
-plugins {
-    id 'java'
-    id 'idea'
-    id 'maven'
-    id 'maven-publish'
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'idea'
 
-repositories {
-    mavenCentral()
-}
+    repositories {
+        maven { url 'https://jitpack.io' }
+        mavenCentral()
+    }
 
-dependencies {
-    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
 
-    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
-}
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
         }
     }
-}
 
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
+    install {
+        repositories.mavenInstaller {
+            pom.project {
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
                 }
             }
         }
     }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
 }

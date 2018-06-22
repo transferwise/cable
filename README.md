@@ -1,4 +1,4 @@
-# Cable [![CircleCI](https://circleci.com/gh/transferwise/cable/tree/master.svg?style=shield)](https://circleci.com/gh/transferwise/cable/tree/master)
+# Cable [![CircleCI](https://circleci.com/gh/transferwise/cable/tree/master.svg?style=shield)](https://circleci.com/gh/transferwise/cable/tree/master) [![GitHub release](https://jitpack.io/v/transferwise/cable.svg)](https://github.com/transferwise/cable/releases/latest)
 
 A simple and minimalistic url rewrite module.
 
@@ -14,20 +14,25 @@ allprojects {
 }
 
 dependencies {
-    compile 'com.github.transferwise:cable:1.0.0'
+    compile 'com.github.transferwise.cable:cable-starter:2.0.0'
 }
+```
+
+If you want to use the servlet filters by your own avoiding auto-configuration, just include the `cable-core` dependency
+
+```gradle
+compile 'com.github.transferwise.cable:cable-core:2.0.0'
 ```
 
 ## Configuration
 
-Integration with Spring.
+Using the starter module you can easily add new rewrite rules to your `application.yml`
 
-```java
-@Bean
-public Filter urlRewriteFilter() {
-    return new UrlRewriteFilter()
-        .rewrite("/path", "/more/interesting/path")
-        .rewrite("^/([a-z]{2})/(.*)$", "/$1/blog/$2");
+```yaml
+cable:
+  rewrites:
+    - {from: "/path", to: "/more/interesting/path"}
+    - {from: "^/([a-z]{2})/(.*)$", to: "/$1/blog/$2"}
 }
 ```
 
@@ -41,7 +46,7 @@ In Thymeleaf templates it will work automatically with link url expressions `@{.
 
 It will also automatically work on redirects within your controllers.
 
-## Advanced use
+## Advanced usage
 
 You can use lambda functions tu create more complex filters, so you will rewrite the url under controlled circumstances.
 

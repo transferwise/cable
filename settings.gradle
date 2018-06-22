@@ -1,0 +1,4 @@
+rootProject.name= 'cable'
+
+include 'cable-core'
+include 'cable-starter'
